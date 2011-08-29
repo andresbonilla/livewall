@@ -1,0 +1,1 @@
+livewall is a public real-time text wall. Edit the text on the wall and all users will see those changes in real-time as they are being made. Fire it up on two side-by-side browser windows to see the magic. livewall is built on node.js and uses socket.io. Upcoming features include caret position conservation and sending only changes.

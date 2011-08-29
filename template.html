@@ -1,0 +1,64 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  <head>
+	<title>livewall</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var textarea = $('#entry');		
+			var characterLimit = 3500;
+			
+			var socket = io.connect('http://livewall.herokuapp.com');
+			socket.on('message', function(message) {								
+				textarea.attr('value', message);          
+			});
+
+			function limitCharacters() {
+				if (textarea[0].value.length > characterLimit) {
+			        textarea[0].value = textarea[0].value.substring(0, characterLimit);
+			    }
+			}
+
+			textarea.keydown(function(event) {
+				limitCharacters();
+			});
+			
+			textarea.keyup(function(event) {
+				limitCharacters();
+				var msg = textarea.attr('value');
+			  	socket.send(msg);
+			});
+			
+			textarea.attr("cols", $(window).width()/24.4);
+			textarea.attr("rows", $(window).height()/48);			
+			textarea.focus();
+		});
+    </script>
+	<style type="text/css">
+		body {
+			background:#222;
+			text-align:center;
+			margin:0;
+			border:0;
+			padding:0;
+		}
+		textarea {
+			text-align:justify;
+			resize:none;
+			border:0;
+			background:#222;
+			overflow:hidden;
+			font-size:40px;
+			color:#fff;
+			outline:none;
+		}
+	</style>
+  </head>
+  <body>
+	<a target="_blank" href="http://github.com/andresbonilla/livewall">
+		<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub">
+	</a>
+	<textarea rows="20" cols="20" id="entry"></textarea>
+  </body>
+</html>
