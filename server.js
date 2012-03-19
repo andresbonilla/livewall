@@ -23,9 +23,10 @@ io.sockets.on('connection', function(client) {
 	io.sockets.send(wallText);  // sends the current wall text to new clients
 	
 	client.on('message', function(message) { // called when a change is received from a client
+		console.log(message);
 		wallText = message;  // the new wall text is saved in the wallText variable
 		client.broadcast.send(wallText);  // the new wall text is sent to all OTHER clients
 	});
 });
 
-server.listen(process.env.PORT || 4000);
+server.listen(process.env.PORT || 3000);
