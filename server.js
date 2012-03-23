@@ -15,7 +15,7 @@ var server = http.createServer(function(request, response) {
 var io = require('socket.io').listen(server);
 
 io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
+  io.set("transports", ["xhr-polling", "flashsocket", "json-polling"]);
   io.set("polling duration", 10); 
 });
 
