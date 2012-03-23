@@ -9,7 +9,7 @@
 			var textarea = $('#entry');		
 			var characterLimit = 3500;
 			
-			var socket = io.connect('http://localhost:3000');
+			var socket = io.connect('livewall.heroku.com');
 			socket.on('message', function(message) {
 				textarea.val(unescape(message));          
 			});
