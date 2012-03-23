@@ -9,24 +9,25 @@
 			var textarea = $('#entry');		
 			var characterLimit = 3500;
 			
-			var socket = io.connect('livewall.heroku.com');
-			socket.on('message', function(message) {
-				textarea.val(unescape(message));          
+			var socket = io.connect('http://livewall.herokuapp.com');
+			socket.on('message', function(message) {								
+				textarea.attr('value', unescape(message));          
 			});
 
 			function limitCharacters() {
-		      if (textarea[0].value.length > characterLimit) {
-			    textarea[0].value = textarea[0].value.substring(0, characterLimit);
-			  }
+				if (textarea[0].value.length > characterLimit) {
+			        textarea[0].value = textarea[0].value.substring(0, characterLimit);
+			    }
 			}
 
-			textarea.keydown(function(e) {
+			textarea.keydown(function(event) {
 				limitCharacters();
 			});
 			
 			textarea.keyup(function(event) {
-		      limitCharacters();
-			  socket.send(escape(textarea.val()));
+				limitCharacters();
+				var msg = textarea.attr('value');
+			  	socket.send(escape(msg));
 			});
 			
 			textarea.attr("cols", $(window).width()/24.4);
